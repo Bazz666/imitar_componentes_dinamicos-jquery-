@@ -36,6 +36,7 @@ Things you may want to cover:
         	"rails g scaffold Coupon type:string code:string amount:integer discount:string count:integer user:references"
 
             en modelo coupon se deja codigo propuesto
+    8. primero se debe crear un producto desde pruducts/new , luego las variantes en variants/new donde se debera seleccionar el producto a agregarle una variante con stock, talla y color
 
 
 *
