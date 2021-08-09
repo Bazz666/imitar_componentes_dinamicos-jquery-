@@ -6,6 +6,11 @@ Rails.application.routes.draw do
   authenticate :admin do
     resources :products
     resources :categories
+    resources :sizes
+    resources :colors
+    resources :variations
+    resources :coupons
+
   end
 
   resource :cart, only: [:show, :update] do

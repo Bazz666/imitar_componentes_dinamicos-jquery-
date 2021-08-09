@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_06_030435) do
+ActiveRecord::Schema.define(version: 2021_08_08_201658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,18 @@ ActiveRecord::Schema.define(version: 2021_08_06_030435) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "coupons", force: :cascade do |t|
+    t.string "type"
+    t.string "code"
+    t.integer "amount"
+    t.string "discount"
+    t.integer "count"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_coupons_on_user_id"
+  end
+
   create_table "order_items", force: :cascade do |t|
     t.bigint "order_id"
     t.bigint "product_id"
@@ -53,8 +65,10 @@ ActiveRecord::Schema.define(version: 2021_08_06_030435) do
     t.decimal "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "variation_id"
     t.index ["order_id"], name: "index_order_items_on_order_id"
     t.index ["product_id"], name: "index_order_items_on_product_id"
+    t.index ["variation_id"], name: "index_order_items_on_variation_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -89,9 +103,6 @@ ActiveRecord::Schema.define(version: 2021_08_06_030435) do
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.integer "stock"
-    t.decimal "price"
-    t.string "sku"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -128,8 +139,10 @@ ActiveRecord::Schema.define(version: 2021_08_06_030435) do
     t.index ["size_id"], name: "index_variations_on_size_id"
   end
 
+  add_foreign_key "coupons", "users"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
+  add_foreign_key "order_items", "variations"
   add_foreign_key "orders", "users"
   add_foreign_key "payments", "orders"
   add_foreign_key "payments", "payment_methods"
