@@ -1,3 +1,4 @@
 class Physical < ApplicationRecord
-  belongs_to :product
+  has_many :products, as: :category
+  has_many :images, as: :imageable
 end
